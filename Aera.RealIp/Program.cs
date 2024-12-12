@@ -21,8 +21,12 @@ app.UseHttpsRedirection();
 
 app.MapGet("/getRealIp", (HttpRequest request) =>
     {
-        var headers= request.Headers;
-        var header = headers["X-Forwarded-For"];
+        string header = string.Empty;
+        header = request.Headers["X-Forwarded-For"];
+        if (header == null || header == string.Empty)
+        {
+            header = request.Host.Host;
+        }
         return header;
     })
     .WithName("GetRealIp")
