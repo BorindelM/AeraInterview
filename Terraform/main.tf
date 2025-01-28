@@ -13,7 +13,7 @@ resource "random_string" "acr_prefix" {
 }
 
 resource "azurerm_container_registry" "example" {
-  name                = "${var.acr_name}-${random_string.acr_prefix.result}"
+  name                = "${var.acr_name}${random_string.acr_prefix.result}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   sku                 = "Standard"
@@ -21,6 +21,7 @@ resource "azurerm_container_registry" "example" {
 
 
 resource "azurerm_kubernetes_cluster" "example" {
+  dns_prefix          = "aeratest"      
   name                = "${var.aks_name}-${random_string.acr_prefix.result}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
