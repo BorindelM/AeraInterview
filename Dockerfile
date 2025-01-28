@@ -1,5 +1,19 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:6c4df091e4e531bb93bdbfe7e7f0998e7ced344f54426b7e874116a3dc3233ff
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /App
-COPY ./ /App/
-ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
+
+COPY ["Aera.RealIp", "Aera.RealIp"]
+
+WORKDIR /App/Aera.RealIp
+
+RUN dotnet restore
+RUN dotnet publish -o /App/build
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+COPY --from=build /App/build /App
+
+WORKDIR /App
+
+ENTRYPOINT ["dotnet", "Aera.RealIp.dll"]
