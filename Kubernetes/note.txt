@@ -1,0 +1,5 @@
+az aks get-credentials --resource-group aeratest-rg --name aeratest-aks
+
+
+helm install -f Kubernetes/nginx-ingress/overrides.yaml nginx-ingress ingress-nginx/ingress-nginx --version 4.9.1 --create-namespace --namespace nginx
+

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: realip-deployment
+  labels:
+    app: realip
+  namespace: aera
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: realip
+  template:
+    metadata:
+      labels:
+        app: realip
+    spec:
+      containers:
+      - name: realip
+        image: aeratestcontainerregistry.azurecr.io/aerarealip:latest
+        ports:
+        - containerPort: 8080

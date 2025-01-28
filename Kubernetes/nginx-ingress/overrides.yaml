@@ -1,0 +1,29 @@
+namespaceOverride: nginx
+commonLabels:
+  hs-nginx-class: nginx
+controller:
+  config:
+    # use-proxy-protocol: "true"
+    large-client-header-buffers: "4 32k"
+  electionID: ingress-controller-leader    # change when deploy new ingress class
+  ingressClass: ingress-nginx  # default: nginx
+  ingressClassResource:
+    name: nginx  # default: nginx
+    enabled: true
+    default: false
+  metrics:
+    enabled: true
+  service:
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-health-probe-request-path: /healthz
+    externalTrafficPolicy: "Local"
+  replicaCount: 2
+  nodeSelector:
+    kubernetes.io/os: linux
+  admissionWebhooks:
+    patch:
+      nodeSelector:
+        kubernetes.io/os: linux
+defaultBackend:
+  nodeSelector:
+    kubernetes.io/os: linux
