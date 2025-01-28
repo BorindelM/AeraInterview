@@ -1,5 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0@sha256:6c4df091e4e531bb93bdbfe7e7f0998e7ced344f54426b7e874116a3dc3233ff
 
 WORKDIR /App
-COPY ./Aera.RealIp/bin/Release/net8.0/* /App/
+COPY ./ /App/
 ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
